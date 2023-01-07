@@ -26,19 +26,19 @@ func (c Course) GetDiffDays() int {
 
 func (c Course) OutputDueDates() {
 	var days string
+	difference := c.GetDiffDays()
 
-	if c.GetDiffDays() != 1 {
-		days = fmt.Sprintf("%-3v days\n", c.GetDiffDays())
+	if difference != 1 {
+		days = fmt.Sprintf("%-3v days\n", difference)
 	} else {
-		days = fmt.Sprintf("%-3v day\n", c.GetDiffDays())
+		days = fmt.Sprintf("%-3v day\n", difference)
 	}
 
 	fmt.Printf("\nCourse: %v\n", c.Name)
-	fmt.Printf("Assignment due in: %v", days)
+	fmt.Printf("Assignment due in: %v\n", days)
 	for _, i := range c.Assign[0].Tasks {
-		fmt.Println(i)
+		fmt.Println("-- ", i)
 	}
-
 }
 
 func Unmarshal(file, file_type string) (c Course, err error) {
@@ -77,7 +77,9 @@ func main() {
 		courses = append(courses, config)
 	}
 
+	fmt.Println("Due Dates")
+
 	for _, course := range courses {
-	  course.OutputDueDates()
+		course.OutputDueDates()
 	}
 }
